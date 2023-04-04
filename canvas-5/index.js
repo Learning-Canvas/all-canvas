@@ -12,7 +12,7 @@ class Sine{
         c.beginPath()
         c.moveTo(0,window.innerHeight/2)
         for(let i=0;i<1500;i+=1){
-            console.log(Math.sin(Math.PI*i/180))
+      
             c.lineTo(i,window.innerHeight/2+this.amplitude*Math.sin((Math.PI*i/180)*this.frequency)) 
         }
         c.stroke()
@@ -35,7 +35,6 @@ for(let i=x;i<100;i++){
     sinarr[i-x].draw(c,i,1,0.05)
 }
 
-console.log(sinarr)
 function animate(){
     requestAnimationFrame(animate)
     c.clearRect(0,0,window.innerWidth,window.innerHeight)

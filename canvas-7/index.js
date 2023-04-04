@@ -28,17 +28,17 @@ class planet{
         c.strokeStyle=this.color;
         c.fillStyle=this.color;
         c.fill();
-        c.stroke();
+        
         this.deg+=this.speed;
     }
 
 
 }
-
+let numofplanets=30;
 let planet1=new planet();
 planet1.draw(c,200,10,'green',2);
 let planets=[]
-for(let i=0;i<30;i++){
+for(let i=0;i<numofplanets;i++){
     planets.push(new planet());
     let mainradius=Math.random()*200;
     let smallradius=Math.random()*10;
@@ -52,8 +52,9 @@ function animate(){
     c.arc(centerx,centery,1,0,Math.PI*2,false);
     c.stroke();
     planet1.update(c);
-    for(let i=0;i<30;i++){
+    for(let i=0;i<numofplanets;i++){
         planets[i].update(c)
     }
+    c.stroke();
 }
 animate()

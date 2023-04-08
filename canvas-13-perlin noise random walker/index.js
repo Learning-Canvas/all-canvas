@@ -44,14 +44,13 @@ class perlinnoise{
         this.length=count;
         return ret/(count);
     }
-
 }
 const fps=1000;//set the frame rate of animation
 //new perlinnoise(smoothness of perlin noise if randomness a lot more smoother just increase the number)
-let per1=new perlinnoise(10);
+let per1=new perlinnoise(5);
 let x=innerWidth/2;
 let y=innerHeight/2;
-let speed=1;
+let speed=5;
 c.beginPath();
 
 

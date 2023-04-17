@@ -42,7 +42,7 @@ function accleratetowardsmouse(event){
     ball1.setmouse(event.offsetX,event.offsetY)
 }
 function animate(){
-    c.clearRect(0,0,innerWidth,innerHeight)
+    // c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)
     ball1.move()
     ball1.display(c)

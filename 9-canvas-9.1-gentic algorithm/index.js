@@ -9,8 +9,8 @@ let LINEBREAKER=2;
 
 let generation=0;
 let target="I wrote my first genetic algorithm  "
-let populationsize=100;
-let mutationrate=2;
+let populationsize=1000;
+let mutationrate=5;
 let p1=new Population(populationsize,target.toUpperCase(),mutationrate);
 let population=p1.createpopulation();
 p1.calcfitnessofpopulation();

@@ -10,7 +10,7 @@ function randomChar(){
 }
 
 export class Population{
-    constructor(populationsize,target){
+    constructor(populationsize,target,mutationrate){
         this.populationsize=populationsize;
         this.target=target;
         this.targetlength=target.length;
@@ -19,6 +19,7 @@ export class Population{
         this.avgfitness=0;
         this.totalfitness=0;
         this.generation=1;
+        this.mutationrate=mutationrate/100;
     }
     createpopulation(){
         for(let i=0;i<this.populationsize;i++){
@@ -35,13 +36,14 @@ export class Population{
         for(let i=0;i<this.populationsize;i++){
             this.population[i].calcfitness();
         }
+        
         for(let i=0;i<this.populationsize;i++){
             this.totalfitness+=this.population[i].fitness;
         }
-        this.avgfitness=this.totalfitness/this.populationsize;
+        this.avgfitness=(this.totalfitness/(this.targetlength*this.populationsize))*100;
         this.normalizefitness()
         
-        return this.avgfitness
+        return Math.round(this.avgfitness)
     }
     normalizefitness(){
         for(let i=0;i<this.populationsize;i++){
@@ -51,14 +53,27 @@ export class Population{
     reproduce(){
         let newpopluation=[];
         this.generatebucket();
-        console.log(this.populationprobabilityarry);
+        
         for(let i=0;i<this.populationsize;i++){
             let str1=this.selection();
             let str2=this.selection();
-            console.log(str1,str2);
             newpopluation.push(new Dna(this.crossover(str1,str2),this.target));
         }
+        this.mutation(newpopluation)
         this.population=newpopluation;
+    }
+    mutation(newpopluation){
+        for(let i=0;i<this.populationsize;i++){
+            let newpopluationsize=newpopluation[i].dna.length;
+            for(let j=0;j<newpopluationsize;j++){
+                if(Math.random()<this.mutationrate){
+                    console.log(newpopluation[i].dna)
+                    let rand=randomChar()
+                    newpopluation[i].dna=newpopluation[i].dna.substring(0,j)+rand+newpopluation[i].dna.substring(j+1);
+                    console.log(newpopluation[i].dna,j,rand)
+                }
+            }
+        }
     }
     selection(){
         let randomNumber = Math.floor(Math.random()*this.populationprobabilityarry.length);
@@ -84,11 +99,14 @@ export class Population{
         let maxfitness=this.population[0].fitness;
         let ret=this.population[0].dna;
         for(let i=1;i<this.populationsize;i++){
+            
             if(maxfitness<this.population[i].fitness){
                 maxfitness=this.population[i].fitness;
                 ret=this.population[i].dna;
+               
             }
         }
+        
         return [ret,maxfitness];
     }
 }

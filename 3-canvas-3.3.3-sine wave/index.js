@@ -24,8 +24,8 @@ class Oscillator{
 let oscarr=[]
 let radius=10;
 let amplitude=200;
-let frequency=50;
-for(let i=-innerWidth/2;i<innerWidth;i++){
+let frequency=20;
+for(let i=-innerWidth/2;i<innerWidth;i+=0.5){
     oscarr.push(new Oscillator(radius,amplitude*Math.sin(i/frequency),0.05,i,0))
 }
 function animate(){

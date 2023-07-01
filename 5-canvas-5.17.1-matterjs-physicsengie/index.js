@@ -2,7 +2,10 @@ let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
-
+alert("click to generate boxes")
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
 var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -30,6 +33,7 @@ function drawrect(c,x,y,l,b,angle){
     c.setTransform(1, 0, 0, 1, 0, 0);
     //
 }
+
 function drawrectground(c,x,y,l,b){
     c.beginPath();
     c.rect(x-l/2, y-b/2, l, b);
@@ -71,7 +75,7 @@ let boxes=[]
 let ground=new Ground(Composite,innerWidth/2 , innerHeight, innerWidth, 100)
 
 function createrect(e){
-    boxes.push(new Boxy(Composite,e.clientX,e.clientY,100,50))
+    boxes.push(new Boxy(Composite,e.clientX,e.clientY,randomIntFromInterval(50,100),randomIntFromInterval(50,100)))
 }
 
 function animate(){

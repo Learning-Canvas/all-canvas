@@ -1,4 +1,5 @@
 import { Pvector } from "./Pvector.js"
+alert("click to apply wind force")
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth

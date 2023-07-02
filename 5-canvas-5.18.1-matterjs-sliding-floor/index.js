@@ -2,6 +2,7 @@ import Boxy from './Box.js'
 import Floor from './Floor.js'
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
+alert("click to generate boxes")
 canvas.width=innerWidth
 canvas.height=innerHeight
 let Engine = Matter.Engine,
@@ -16,7 +17,10 @@ let World=engine.world
 var runner = Runner.create();
 // run the engine
 Runner.run(runner, engine);
-
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+  
 // let box1= Bodies.rectangle(400, 200, 80, 80);
 // Composite.add(World, [box1]);
 let boxes=[]
@@ -27,7 +31,7 @@ canvas.addEventListener("mousedown",(e)=>{
 
 
 function createbox(e){
-    boxes.push(new Boxy(Bodies,Composite,World,e.clientX,e.clientY,30,30))
+    boxes.push(new Boxy(Bodies,Composite,World,e.clientX,e.clientY,randomIntFromInterval(20,40),randomIntFromInterval(20,40)))
 }
 
 floors.push(new Floor(Bodies,Composite,World,innerWidth/4,innerHeight/2.3,innerWidth/2,10,0.1))

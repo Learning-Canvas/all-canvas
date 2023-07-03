@@ -1,11 +1,11 @@
 export default class Floor{
-    constructor(Bodies,Composite,World,x,y,l,h,angle){
+    constructor(Bodies,Composite,World,x,y,l,h,angle,friction){
         this.angle=angle
         this.l=l,this.h=h;
         this.options={
             angle:angle,
             isStatic:true,
-            friction:0
+            friction:friction
         }
         this.box=Bodies.rectangle(x,y,l,h,this.options)
         Composite.add(World, [this.box]);

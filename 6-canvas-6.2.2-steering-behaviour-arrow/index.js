@@ -9,17 +9,19 @@ class Agent{
         this.location=new Pvector(0,0)
         this.velocity=new Pvector(3,1)
         this.acceleration=new Pvector(0,0)
-        this.maxvelocity=1
+        this.maxvelocity=3
         this.maxforce=0.1
         this.radius=50
     }
     applyForce(force){
         force.limit(this.maxforce)
+        this.acceleration.setmag(0)
         this.acceleration.add(force)
+        console.log(force.mag())
         this.velocity.add(this.acceleration)
         this.velocity.limit(this.maxvelocity)
         this.location.add(this.velocity)
-        this.acceleration.setmag(0)
+        
     }
     update(){
         this.velocity.add(this.acceleration)

@@ -40,7 +40,7 @@ function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
     ctx.fill()
     //draws the paths created above
     ctx.stroke();
-    ctx.restore();
+    
 }
 class Agent{
     constructor(){

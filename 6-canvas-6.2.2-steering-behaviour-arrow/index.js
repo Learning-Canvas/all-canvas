@@ -4,7 +4,44 @@ let canvas=document.getElementById("canvas");
 let c=canvas.getContext("2d");
 canvas.width=innerWidth
 canvas.height=innerHeight
-
+function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
+    //variables to be used when creating the arrow
+    var headlen = 50;
+    var angle = Math.atan2(toy-fromy,tox-fromx);
+ 
+    ctx.save();
+    ctx.strokeStyle = color;
+ 
+    //starting path of the arrow from the start square to the end square
+    //and drawing the stroke
+    // ctx.beginPath();
+    // ctx.moveTo(fromx, fromy);
+    // ctx.lineTo(tox, toy);
+    // ctx.lineWidth = arrowWidth;
+    // ctx.stroke();
+ 
+    //starting a new path from the head of the arrow to one of the sides of
+    //the point
+    ctx.beginPath();
+    ctx.moveTo(tox, toy);
+    ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/10),
+               toy-headlen*Math.sin(angle-Math.PI/10));
+ 
+    //path from the side point of the arrow, to the other side point
+    ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/10),
+               toy-headlen*Math.sin(angle+Math.PI/10));
+ 
+    //path from the side point back to the tip of the arrow, and then
+    //again to the opposite side point
+    ctx.lineTo(tox, toy);
+    ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/10),
+               toy-headlen*Math.sin(angle-Math.PI/10));
+    ctx.fillStyle=color;
+    ctx.fill()
+    //draws the paths created above
+    ctx.stroke();
+    ctx.restore();
+}
 class Agent{
     constructor(){
         this.location=new Pvector(0,0)
@@ -28,37 +65,14 @@ class Agent{
         this.velocity.limit(this.maxvelocity)
         this.location.add(this.velocity)
     }
-    rotaterightvector(x,y){
-        let angle=Math.atan(y/x)
-        let r=x/Math.cos(angle)
-        angle+=8*Math.PI/9
-        return [r*Math.cos(angle),r*Math.sin(angle)]
-    }
-    rotateleftvector(x,y){
-        let angle=Math.atan(y/x)
-        let r=x/Math.cos(angle)
-        angle-=8*Math.PI/9
-        return [r*Math.cos(angle),r*Math.sin(angle)]
-    }
-    drawarrow(c,x,y,velocity,angle){
-    let newvector=new Pvector(velocity.x,velocity.y)
-    newvector.setmag(100)
-    c.beginPath();
-    c.moveTo(x, y);
-    c.lineTo(x+newvector.x, y+newvector.y);
-    let xy1=this.rotaterightvector(x+newvector.x, y+newvector.y)
-    c.lineTo(xy1[0],xy1[1])
-    c.moveTo(x+newvector.x, y+newvector.y);
-    let xy2=this.rotateleftvector(x+newvector.x, y+newvector.y)
-    c.lineTo(xy2[0],xy2[1])
-    c.stroke()
-
-    }
+   
     display(c){
-        this.drawarrow(c,this.location.x,this.location.y,this.velocity)
-        c.beginPath()
-        c.arc(this.location.x,this.location.y,this.radius,0,Math.PI*2,false)
-        c.stroke()    
+        let newvector=new Pvector(this.velocity.x,this.velocity.y)
+        newvector.setmag(100)
+        drawArrow(c, this.location.x, this.location.y, this.location.x+newvector.x, this.location.y+newvector.y, 10, "#ADD8E6")
+        // c.beginPath()
+        // c.arc(this.location.x,this.location.y,this.radius,0,Math.PI*2,false)
+        // c.stroke()    
     }
 }
 

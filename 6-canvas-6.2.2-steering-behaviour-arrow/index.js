@@ -34,8 +34,8 @@ function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
     //path from the side point back to the tip of the arrow, and then
     //again to the opposite side point
     ctx.lineTo(tox, toy);
-    ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/10),
-               toy-headlen*Math.sin(angle-Math.PI/10));
+    // ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/10),
+    //            toy-headlen*Math.sin(angle-Math.PI/10));
     ctx.fillStyle=color;
     ctx.fill()
     //draws the paths created above

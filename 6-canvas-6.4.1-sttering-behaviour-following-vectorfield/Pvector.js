@@ -29,18 +29,13 @@ export class Pvector{
     mag(){
         return Math.sqrt(this.x*this.x+this.y*this.y)
     }
-    setangle(theta){
-        if(theta<=Math.PI/2 || theta>Math.PI*3/2){
-            this.x=1
-            this.y=-1*Math.tan(theta)
-            this.normalize()
-        }
-        else{
-        this.x=-1
-        this.y=Math.tan(theta)
+    setangle(angle){
+        let newx = this.x * Math.cos(angle) - this.y * Math.sin(angle)
+        let newy = this.x * Math.sin(angle) + this.y * Math.cos(angle)
+
+        this.x=newx
+        this.y=newy
         this.normalize()
-        }
-        
     }
     normalize(){
         let mg=this.mag();

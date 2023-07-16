@@ -58,3 +58,44 @@ export function drawTriangle(ctx, fromx, fromy, tox, toy, arrowWidth, color){
   ctx.stroke();
   
 }
+class Node{
+  constructor(val){
+      this.val=val;
+      this.next=null;
+  }
+}
+export class perlinnoise{
+  constructor(length){
+      
+      this.length=length-2;
+      this.head=new Node(Math.random());
+      this.tail=new Node(Math.random());
+      let curr=this.head;
+      let count=this.length;
+      while(count-->0){
+          curr.next=new Node(Math.random());
+          curr=curr.next;
+      }
+      curr.next=this.tail;
+  }
+  generate(){
+      if(this.length==-1){
+          return Math.random()
+      }
+      let temp=this.head.next;
+      this.head.next=null;
+      this.head=temp;
+      this.tail.next=new Node(Math.random());
+      this.tail=this.tail.next;
+      let curr=this.head;
+      let ret=0;
+      let count=0;
+      while(curr!=null){
+          ret+=curr.val;
+          curr=curr.next;
+          count++;
+      }
+      this.length=count;
+      return ret/(count);
+  }
+}

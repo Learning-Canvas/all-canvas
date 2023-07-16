@@ -1,12 +1,12 @@
 import { Pvector } from "./Pvector.js"
-import { drawArrow,drawTriangle } from "./Arrows.js"
+import { drawArrow,drawTriangle,perlinnoise } from "./Arrows.js"
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
 // c.translate(innerWidth/2, innerHeight/2);
-
-
+//new perlinnoise(smoothness of perlin noise if randomness a lot more smoother just increase the number)
+let perl1=new perlinnoise(10)
 class Cell{
     constructor(theta,x,y){
         this.vec=new Pvector(1,1)
@@ -27,7 +27,7 @@ createCells(){
     for(let i=0;i<this.cols;i++){
         this.grid.push([])
         for(let j=0;j<this.rows;j++){
-            this.grid[i].push(new Cell(30*Math.random(),j*this.resolution,i*this.resolution))
+            this.grid[i].push(new Cell(360*perl1.generate(),j*this.resolution,i*this.resolution))
         }
     }    
 }
@@ -73,25 +73,26 @@ canvas.addEventListener("mousedown",(e)=>{
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)
-    let i=Math.floor(ag1.location.y/g1.resolution)
-    let j=Math.floor(ag1.location.x/g1.resolution) 
+    let i=Math.floor(ag1.location.y/g1.resolution)+1
+    let j=Math.floor(ag1.location.x/g1.resolution)+1
     
-    if(ag1.location.y/g1.resolution<g1.cols && ag1.location.x/g1.resolution<g1.rows){
+    if(ag1.location.y/g1.resolution>=0 && ag1.location.x/g1.resolution &&ag1.location.y/g1.resolution<g1.cols && ag1.location.x/g1.resolution<g1.rows){
         ag1.applyForce(g1.grid[i][j].vec)
+        ag1.display(c)
     }
     g1.show(c)
     //----for debugging the testagent----------
-    // c.strokeStyle="red"
-    // drawArrow(c,g1.grid[i][j].x,g1.grid[i][j].y,g1.grid[i][j].x+g1.grid[i][j].vec.x,g1.grid[i][j].y+g1.grid[i][j].vec.y)
-    ag1.display(c)
+    c.strokeStyle="red"
+    drawArrow(c,g1.grid[i][j].x,g1.grid[i][j].y,g1.grid[i][j].x+g1.grid[i][j].vec.x,g1.grid[i][j].y+g1.grid[i][j].vec.y)
+    
     //----for debugging the testagent----------
 
     //--------------------for more agents------------
 
     for(let k=0;k<agents.length;k++){
-        let l=Math.floor(agents[k].location.y/g1.resolution)
-        let m=Math.floor(agents[k].location.x/g1.resolution) 
-        if(agents[k].location.y/g1.resolution<g1.cols && agents[k].location.x/g1.resolution<g1.rows){
+        let l=Math.floor(agents[k].location.y/g1.resolution)+1
+        let m=Math.floor(agents[k].location.x/g1.resolution)+1
+        if(agents[k].location.y/g1.resolution>=0 && agents[k].location.x/g1.resolution>=0 && agents[k].location.y/g1.resolution<g1.cols && agents[k].location.x/g1.resolution<g1.rows){
             agents[k].applyForce(g1.grid[l][m].vec)
         }
         agents[k].display(c)

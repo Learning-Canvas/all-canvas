@@ -25,7 +25,7 @@ export function drawTriangle(ctx, fromx, fromy, tox, toy, arrowWidth, color){
   var headlen = arrowWidth;
   var angle = Math.atan2(toy-fromy,tox-fromx);
 
-  ctx.save();
+  // ctx.save();//will slow down the program
   ctx.strokeStyle = color;
 
   //starting path of the arrow from the start square to the end square
@@ -57,6 +57,15 @@ export function drawTriangle(ctx, fromx, fromy, tox, toy, arrowWidth, color){
   //draws the paths created above
   ctx.stroke();
   
+}
+export function drawCircle(c, fromx, fromy, tox, toy, arrowWidth, color){
+c.beginPath()
+c.arc(fromx,fromy,arrowWidth,0,Math.PI*2,false)
+c.moveTo(fromx,fromy)
+c.lineTo(tox,toy)
+c.fillStyle=color
+c.fill()
+c.stroke()
 }
 class Node{
   constructor(val){

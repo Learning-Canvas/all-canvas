@@ -4,7 +4,8 @@ let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
-let showinggrid=false;
+let showinggrid=true;
+alert("press g to see the grid")
 // c.translate(innerWidth/2, innerHeight/2);
 //new perlinnoise(smoothness of perlin noise if randomness a lot more smoother just increase the number)
 let perl1=new perlinnoise(8)

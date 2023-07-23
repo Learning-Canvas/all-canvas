@@ -1,5 +1,5 @@
 import {Pvector} from './Pvector.js'
-import {drawArrow,drawTriangle} from './Arrows.js'
+import {drawArrow,perlinnoise,drawTriangle} from './Arrows.js'
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
@@ -21,16 +21,31 @@ class Agent{
         this.velocity.add(this.acceleration)
         this.velocity.limit(this.maxvelocity)
         this.location.add(this.velocity)
+        if(this.location.x<0){
+            this.location.x=innerWidth-10
+        }
+        if(this.location.y<0){
+            this.location.y=innerHeight-10
+        }
+        if(this.location.x>=innerWidth){
+            this.location.x=10
+        }
+        if(this.location.y>=innerHeight){
+            this.location.y=10
+        }
     }
     show(c){
+        
         let newvec=new Pvector(this.velocity.x,this.velocity.y)
         drawTriangle(c,this.location.x,this.location.y,this.location.x+newvec.x,this.location.y+newvec.y,15,"black")
     }
 }
-class Cell{
-    constructor(x,y){
+class fieldline{
+    constructor(x,y,angle){
         this.location=new Pvector(x,y)
-        // this.location.setangle(0)
+        this.force=new Pvector(1,1)
+        this.force.setangle(angle*Math.PI/180)
+        this.force.setmag(20)
     }
 }
 class Grid{
@@ -39,20 +54,22 @@ class Grid{
         this.resolution=resolution;
         this.rows=width/resolution;
         this.cols=height/resolution;
-        
     }
     createcells(){
+        let perl1=new perlinnoise(20)
         for(let i=0;i<this.rows;i++){
             this.grid.push([])
             for(let j=0;j<this.cols;j++){
-                this.grid[i].push(new Cell(i*this.resolution,j*this.resolution))
+                this.grid[i].push(new fieldline(i*this.resolution,j*this.resolution,perl1.generate()*360))
             }
         }
     }
     show(c){
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
-                drawArrow(c,this.grid[i][j].location.x,this.grid[i][j].location.y,this.grid[i][j].location.x+10,this.grid[i][j].location.y+10)
+                let l=i*this.resolution
+                let m=j*this.resolution
+                drawArrow(c,l,m,l+this.grid[i][j].force.x,m+this.grid[i][j].force.y)
             }
         }
     }
@@ -60,13 +77,15 @@ class Grid{
 let g1=new Grid(innerWidth,innerHeight,20)
 g1.createcells()
 
-
-let ag1=new Agent(innerWidth/2,innerHeight/2,10,10)
+let ag1=new Agent(innerWidth/2,innerHeight/2,1,1)
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)
-    let gravity=new Pvector(0,0.1)
-    ag1.applyForce(gravity)
+    let currx=Math.floor(ag1.location.x/g1.resolution)+1
+    let curry=Math.floor(ag1.location.y/g1.resolution)+1
+    console.log(ag1)
+    let currfieldline=new Pvector(g1.grid[currx][curry].force.x,g1.grid[currx][curry].force.y)
+    ag1.applyForce(currfieldline)
     ag1.update()
     ag1.show(c)
     g1.show(c)

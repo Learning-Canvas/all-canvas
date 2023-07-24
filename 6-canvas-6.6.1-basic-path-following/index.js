@@ -38,21 +38,36 @@ constructor(x,y,velocitylimit,forcelimit){
     this.newvel.setmag(1)
     this.forcelimit=forcelimit
     this.velocitylimit=velocitylimit
+    this.littlebitalongtarget=100
+    this.futurelookuplen=100
 }
 seek(path){
     let futureplace=new Pvector(this.velocity.x,this.velocity.y)
-    futureplace.setmag(200)
+    futureplace.setmag(this.futurelookuplen)
     futureplace.add(this.location)
     circle(c,futureplace.x,futureplace.y)
     let bbar=path.end.subvector(path.start)
     let abar=futureplace.subvector(path.start)
     let adjlen=(abar.dot(bbar))/bbar.mag()
     let adj=new Pvector(bbar.x,bbar.y)
-    adj.setmag(adjlen)
+    
+    bbar.setmag(adjlen)
+    bbar.add(path.start)
+    circle(c,bbar.x,bbar.y)
+    adj.setmag(adjlen+this.littlebitalongtarget)
     adj.add(path.start)
-    circle(c,adj.x,adj.y)
-    let seek=adj.subvector(this.location)
-    this.applyForce(seek)
+    let dist=bbar.subvector(futureplace).mag()
+    if(dist>path.radius){
+        c.fillStyle="red"
+        circle(c,adj.x,adj.y)
+        let target=adj.subvector(this.location)
+        this.applyForce(target)
+    }
+    else{
+        c.fillStyle="black"
+        circle(c,adj.x,adj.y)
+    }
+    c.fill()
 }
 applyForce(force){
 force.limit(this.forcelimit)
@@ -87,7 +102,7 @@ show(c){
 }
 }
 
-let ag1=new Agent(innerWidth/2,100,1,0.1)
+let ag1=new Agent(innerWidth/2,100,3,3)
 let p1=new Path(0,innerHeight/3,innerWidth,innerHeight/1.7,20)
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)

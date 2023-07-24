@@ -1,9 +1,11 @@
 import {Pvector} from './Pvector.js'
-import {drawArrow,perlinnoise,drawTriangle} from './Arrows.js'
+import {drawArrow,perlinnoise,drawTriangle,mousedrag} from './Arrows.js'
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
+let resolution=30
+alert('click and drag to create agents')
 class Agent{
     constructor(x,y,maxvelocity,maxforce){
         this.location=new Pvector(x,y)
@@ -38,6 +40,12 @@ class Agent{
         
         let newvec=new Pvector(this.velocity.x,this.velocity.y)
         drawTriangle(c,this.location.x,this.location.y,this.location.x+newvec.x,this.location.y+newvec.y,15,"black")
+        //drawlines
+        // c.beginPath()
+        // c.moveTo(this.location.x,this.location.y)
+        // c.lineTo(this.location.x+newvec.x,this.location.y+newvec.y)
+        // c.strokeStyle="red"
+        // c.stroke()
     }
 }
 class fieldline{
@@ -54,13 +62,25 @@ class Grid{
         this.resolution=resolution;
         this.rows=(width/resolution)+1;
         this.cols=(height/resolution)+1;
+        this.perlin=[]
+        this.perlinchange=50
     }
     createcells(){
-        let perl1=new perlinnoise(20)
+        
         for(let i=0;i<this.rows;i++){
             this.grid.push([])
+            this.perlin.push([])
             for(let j=0;j<this.cols;j++){
-                this.grid[i].push(new fieldline(i*this.resolution,j*this.resolution,perl1.generate()*360))
+                this.perlin[i].push(new perlinnoise(this.perlinchange))
+                this.grid[i].push(new fieldline(i*this.resolution,j*this.resolution,this.perlin[i][j].generate()*360))
+            }
+        }
+    }
+    updategrid(){
+        console.log(this.perlin)
+        for(let i=0;i<this.rows;i++){
+            for(let j=0;j<this.cols;j++){
+                this.grid[i][j]=new fieldline(i*this.resolution,j*this.resolution,this.perlin[i][j].generate()*360)
             }
         }
     }
@@ -74,14 +94,26 @@ class Grid{
         }
     }
 }
-let agarr=[]
-let g1=new Grid(innerWidth,innerHeight,20)
-let ag1=new Agent(innerWidth/2,innerHeight/2,3,1)
 
-canvas.addEventListener("mousemove",(e)=>{
-agarr.push(new Agent(e.clientX,e.clientY,3,1))
-})
+
+
+let agarr=[]
+let gridvisible=true
+let g1=new Grid(innerWidth,innerHeight,resolution)
+
+mousedrag(canvas,agarr,Agent)
+//for single agent
+// let ag1=new Agent(innerWidth/2,innerHeight/2,3,1)
+//to create multiple agents when mousemove
+// canvas.addEventListener("mousemove",(e)=>{
+// agarr.push(new Agent(e.clientX,e.clientY,3,1))
+// })
 g1.createcells()
+window.addEventListener("keypress",(e)=>{
+    if(e.key==='g' || e.key==='G'){
+        gridvisible=!gridvisible
+    }
+})
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)
@@ -99,6 +131,13 @@ function animate(){
     agarr[i].update()
     agarr[i].show(c)
     }
+ 
+    g1.updategrid()
+   
+  if(gridvisible){
     g1.show(c)
+  }
+    
 }
 animate()
+

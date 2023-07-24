@@ -108,3 +108,38 @@ export class perlinnoise{
       return ret/(count);
   }
 }
+export function mousedrag(canvas,agarr,Agent){
+  // Variables to track the mouse state
+let isMouseDown = false;
+let mousePosition = { x: 0, y: 0 };
+
+// Function to print mouse coordinates
+function printMouseCoordinates() {
+  if (isMouseDown) {
+    agarr.push(new Agent(mousePosition.x,mousePosition.y,3,1))
+  }
+}
+
+// Event listener for mouse down
+canvas.addEventListener('mousedown', (event) => {
+  isMouseDown = true;
+  mousePosition.x = event.clientX - canvas.offsetLeft;
+  mousePosition.y = event.clientY - canvas.offsetTop;
+});
+
+// Event listener for mouse move
+canvas.addEventListener('mousemove', (event) => {
+  if (isMouseDown) {
+    mousePosition.x = event.clientX - canvas.offsetLeft;
+    mousePosition.y = event.clientY - canvas.offsetTop;
+    printMouseCoordinates();
+  }
+});
+
+// Event listener for mouse up
+canvas.addEventListener('mouseup', () => {
+  isMouseDown = false;
+});
+
+
+}

@@ -12,7 +12,7 @@ function lineto(c,x1,y1,x2,y2){
 }
 function circle(c,x,y){
 c.beginPath()
-c.arc(x,y,30,0,Math.PI*2,false)
+c.arc(x,y,5,0,Math.PI*2,false)
 c.stroke()
 }
 class Path{
@@ -32,7 +32,7 @@ class Path{
 class Agent{
 constructor(x,y,velocitylimit,forcelimit){
     this.location=new Pvector(x,y)
-    this.velocity=new Pvector(0.1,0)
+    this.velocity=new Pvector(1,0)
     this.acceleration=new Pvector(0,0)
     this.newvel=new Pvector(1,1)
     this.newvel.setmag(1)
@@ -41,20 +41,18 @@ constructor(x,y,velocitylimit,forcelimit){
 }
 seek(path){
     let futureplace=new Pvector(this.velocity.x,this.velocity.y)
-    futureplace.setmag(50)
+    futureplace.setmag(200)
     futureplace.add(this.location)
     circle(c,futureplace.x,futureplace.y)
     let bbar=path.end.subvector(path.start)
     let abar=futureplace.subvector(path.start)
-    circle(c,abar.x,abar.y)
     let adjlen=(abar.dot(bbar))/bbar.mag()
     let adj=new Pvector(bbar.x,bbar.y)
-    // circle(c,adj.x,adj.y)
     adj.setmag(adjlen)
     adj.add(path.start)
-    let seek=this.location.subvector(adj)
+    circle(c,adj.x,adj.y)
+    let seek=adj.subvector(this.location)
     this.applyForce(seek)
-    
 }
 applyForce(force){
 force.limit(this.forcelimit)
@@ -65,6 +63,18 @@ update(){
     this.velocity.limit(this.velocitylimit)
     this.location.add(this.velocity)
     this.acceleration.setmag(0)
+    if(this.location.x>=innerWidth){
+        this.location.x=1
+    }
+    if(this.location.x<=0){
+        this.location.x=innerWidth-1
+    }
+    if(this.location.y>=innerHeight){
+        this.location.y=1
+    }
+    if(this.location.y<=0){
+        this.location.y=innerHeight-1
+    }
 }
 
 show(c){
@@ -77,7 +87,7 @@ show(c){
 }
 }
 
-let ag1=new Agent(innerWidth/2,100,3,1)
+let ag1=new Agent(innerWidth/2,100,1,0.1)
 let p1=new Path(0,innerHeight/3,innerWidth,innerHeight/1.7,20)
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)

@@ -21,17 +21,17 @@ class Agent{
         this.velocity.add(this.acceleration)
         this.velocity.limit(this.maxvelocity)
         this.location.add(this.velocity)
-        if(this.location.x<0){
-            this.location.x=innerWidth-10
+        if(this.location.x<=0){
+            this.location.x=innerWidth-1
         }
-        if(this.location.y<0){
-            this.location.y=innerHeight-10
+        if(this.location.y<=0){
+            this.location.y=innerHeight-1
         }
         if(this.location.x>=innerWidth){
-            this.location.x=10
+            this.location.x=1
         }
         if(this.location.y>=innerHeight){
-            this.location.y=10
+            this.location.y=1
         }
     }
     show(c){
@@ -52,8 +52,8 @@ class Grid{
     constructor(width,height,resolution){
         this.grid=[]
         this.resolution=resolution;
-        this.rows=width/resolution;
-        this.cols=height/resolution;
+        this.rows=(width/resolution)+1;
+        this.cols=(height/resolution)+1;
     }
     createcells(){
         let perl1=new perlinnoise(20)
@@ -74,20 +74,31 @@ class Grid{
         }
     }
 }
+let agarr=[]
 let g1=new Grid(innerWidth,innerHeight,20)
-g1.createcells()
+let ag1=new Agent(innerWidth/2,innerHeight/2,3,1)
 
-let ag1=new Agent(innerWidth/2,innerHeight/2,1,1)
+canvas.addEventListener("mousemove",(e)=>{
+agarr.push(new Agent(e.clientX,e.clientY,3,1))
+})
+g1.createcells()
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)
-    let currx=Math.floor(ag1.location.x/g1.resolution)+1
-    let curry=Math.floor(ag1.location.y/g1.resolution)+1
-    console.log(ag1)
+    // let currx=Math.floor(ag1.location.x/g1.resolution)+1
+    // let curry=Math.floor(ag1.location.y/g1.resolution)+1
+    // let currfieldline=new Pvector(g1.grid[currx][curry].force.x,g1.grid[currx][curry].force.y)
+    // ag1.applyForce(currfieldline)
+    // ag1.update()
+    // ag1.show(c)
+    for(let i=0;i<agarr.length;i++){
+    let currx=Math.floor(agarr[i].location.x/g1.resolution)+1
+    let curry=Math.floor(agarr[i].location.y/g1.resolution)+1
     let currfieldline=new Pvector(g1.grid[currx][curry].force.x,g1.grid[currx][curry].force.y)
-    ag1.applyForce(currfieldline)
-    ag1.update()
-    ag1.show(c)
+    agarr[i].applyForce(currfieldline)
+    agarr[i].update()
+    agarr[i].show(c)
+    }
     g1.show(c)
 }
 animate()

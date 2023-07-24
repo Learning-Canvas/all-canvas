@@ -108,6 +108,12 @@ export class perlinnoise{
       return ret/(count);
   }
 }
+
+  
+
+
+
+
 export function mousedrag(canvas,agarr,Agent){
   // Variables to track the mouse state
 let isMouseDown = false;

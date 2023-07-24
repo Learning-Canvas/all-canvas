@@ -13,9 +13,7 @@ export class Pvector{
     }
     subvector(secondvector){
         let ret=new Pvector(this.x,this.y);
-        
         ret.sub(secondvector)
-        
         return ret;
     }
     mult(scalar){
@@ -32,7 +30,6 @@ export class Pvector{
     setangle(angle){
         let newx = this.x * Math.cos(angle) - this.y * Math.sin(angle)
         let newy = this.x * Math.sin(angle) + this.y * Math.cos(angle)
-
         this.x=newx
         this.y=newy
         this.normalize()

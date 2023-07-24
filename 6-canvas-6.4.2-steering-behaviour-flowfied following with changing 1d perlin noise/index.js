@@ -1,5 +1,6 @@
 import {Pvector} from './Pvector.js'
 import {drawArrow,perlinnoise,drawTriangle,mousedrag} from './Arrows.js'
+
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
@@ -64,6 +65,7 @@ class Grid{
         this.cols=(height/resolution)+1;
         this.perlin=[]
         this.perlinchange=50
+      
     }
     createcells(){
         
@@ -75,14 +77,17 @@ class Grid{
                 this.grid[i].push(new fieldline(i*this.resolution,j*this.resolution,this.perlin[i][j].generate()*360))
             }
         }
+       
+        
     }
     updategrid(){
-        console.log(this.perlin)
+       
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
                 this.grid[i][j]=new fieldline(i*this.resolution,j*this.resolution,this.perlin[i][j].generate()*360)
             }
         }
+        
     }
     show(c){
         for(let i=0;i<this.rows;i++){

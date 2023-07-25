@@ -56,7 +56,9 @@ seek(path){
     circle(c,bbar.x,bbar.y)
     adj.setmag(adjlen+this.littlebitalongtarget)
     adj.add(path.start)
+    lineto(c,futureplace.x,futureplace.y,bbar.x,bbar.y)
     let dist=bbar.subvector(futureplace).mag()
+    
     if(dist>path.radius){
         c.fillStyle="red"
         circle(c,adj.x,adj.y)

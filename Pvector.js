@@ -59,7 +59,4 @@ export class Pvector{
     anglebetween(vec2){
         return Math.acos(this.dot(vec2)/(this.mag()*vec2.mag()))
     }
-    copy(){
-        return new Pvector(this.x,this.y)
-    }
 }

@@ -1,41 +1,47 @@
 import {Pvector} from './Pvector.js'
-import { drawCircle,random,mousedrag } from './Arrows.js'
+import { random,drawCircle, mousedrag } from './Arrows.js'
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
 alert("click and drag to create agents")
 class Agent{
-    constructor(x,y,maxvelocity){
+    constructor(x,y,maxvelocity,neighbourdist){
         this.location=new Pvector(x,y)
-        this.velocity=new Pvector(random(-5,10),random(-10,10))
+        this.velocity=new Pvector(random(-10,10),random(-10,10))
         this.acceleration=new Pvector(0,0)
-        this.maxvelocity=maxvelocity
+        this.maxvelocity=maxvelocity;
+        this.neighbourdist=neighbourdist
     }
     align(agarr){
-     
         let sum=new Pvector(0,0)
+        let count=0
         for(let i=0;i<agarr.length;i++){
-
-            sum.add(agarr[i].velocity)
+            let dist=this.location.dist(agarr[i].location)
+            if(dist>0 && dist<this.neighbourdist){
+                sum.add(agarr[i].velocity)
+                count++
+            }
+            
         }
-        sum.div(agarr.length)
-        sum.setmag(this.velocity.mag())
-        this.velocity=sum
+        if(count!=0){
+            sum.div(count)
+            
+            this.velocity=sum;
+        }
+        
     }
     update(){
         this.velocity.add(this.acceleration)
         this.velocity.limit(this.maxvelocity)
         this.location.add(this.velocity)
-        this.acceleration.setmag(0)
         if(this.location.x<0){
             this.location.x=innerWidth
         }
         if(this.location.y<0){
             this.location.y=innerHeight
         }
-        if(this.location.x>innerWidth)
-        {
+        if(this.location.x>innerWidth){
             this.location.x=0
         }
         if(this.location.y>innerHeight){
@@ -50,8 +56,12 @@ class Agent{
     }
 }
 let agarr=[]
-mousedrag(canvas,agarr,Agent)
-
+// window.addEventListener("mousedown",(e)=>{
+//     agarr.push(new Agent(e.clientX,e.clientY,random(3,10),30))
+//     alert("asf")
+// })
+let flocksize=50
+mousedrag(canvas,agarr,Agent,flocksize)
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)

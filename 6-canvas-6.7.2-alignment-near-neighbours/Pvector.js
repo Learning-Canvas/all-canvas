@@ -21,8 +21,11 @@ export class Pvector{
         this.y=this.y*scalar;
     }
     div(scalar){
-        this.x=this.x/scalar;
-        this.y=this.y/scalar;
+        if(scalar>0){
+            this.x=this.x/scalar;
+            this.y=this.y/scalar;
+        }
+        
     }
     mag(){
         return Math.sqrt(this.x*this.x+this.y*this.y)
@@ -35,10 +38,15 @@ export class Pvector{
         this.normalize()
     }
     normalize(){
+        
         let mg=this.mag();
         if(mg!=0){
             this.x=this.x/mg;
             this.y=this.y/mg;
+        }
+        else{
+            this.x=1;
+            this.y=0;
         }
         
     }

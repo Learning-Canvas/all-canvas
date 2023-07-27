@@ -117,7 +117,7 @@ export function random(min, max) { // min and max included
 
 
 
-export function mousedrag(canvas,agarr,Agent,flocksize){
+export function mousedrag(canvas,agarr,Agent){
   // Variables to track the mouse state
 let isMouseDown = false;
 let mousePosition = { x: 0, y: 0 };
@@ -125,7 +125,7 @@ let mousePosition = { x: 0, y: 0 };
 // Function to print mouse coordinates
 function printMouseCoordinates() {
   if (isMouseDown) {
-    agarr.push(new Agent(mousePosition.x,mousePosition.y,random(3,9),flocksize))
+    agarr.push(new Agent(mousePosition.x,mousePosition.y,random(3,9)))
   }
 }
 

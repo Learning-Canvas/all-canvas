@@ -4,7 +4,7 @@ let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
-
+alert("click and drag to create agents")
 class Agent{
 constructor(x,y,velocitylimit){
     this.location=new Pvector(x,y)

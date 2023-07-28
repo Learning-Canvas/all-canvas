@@ -48,8 +48,7 @@ export class Pvector{
     }
     limit(x){
         if(this.mag()>x){
-            this.normalize();
-            this.mult(x)
+           this.setmag(x)
         }
         
     }

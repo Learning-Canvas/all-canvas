@@ -125,7 +125,7 @@ let mousePosition = { x: 0, y: 0 };
 // Function to print mouse coordinates
 function printMouseCoordinates() {
   if (isMouseDown) {
-    agarr.push(new Agent(mousePosition.x,mousePosition.y,3))
+    agarr.push(new Agent(mousePosition.x,mousePosition.y,4))
   }
 }
 
@@ -139,8 +139,10 @@ canvas.addEventListener('mousedown', (event) => {
 // Event listener for mouse move
 canvas.addEventListener('mousemove', (event) => {
   if (isMouseDown) {
+
     mousePosition.x = event.clientX - canvas.offsetLeft;
     mousePosition.y = event.clientY - canvas.offsetTop;
+
     printMouseCoordinates();
   }
 });

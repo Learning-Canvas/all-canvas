@@ -1,10 +1,10 @@
 import {Pvector} from './Pvector.js'
-import {drawCircle, random} from './Arrows.js'
+import {drawCircle, random,mousedrag} from './Arrows.js'
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
 canvas.height=innerHeight
-
+alert("click and drag to create agents")
 class Agent{
     constructor(x,y,velocitylimit){
         this.location=new Pvector(x,y)
@@ -19,7 +19,7 @@ class Agent{
             let dist=this.location.dist(agarr[i].location)
             if(dist>0 && dist<100){
                 let opposite=agarr[i].location.subvector(this.location)
-                opposite.div(dist*-1)
+                opposite.div(0.9*dist*-1)
                 sum.add(opposite)
                 count++;
             }
@@ -58,9 +58,10 @@ class Agent{
     }
 }
 let agarr=[]
-window.addEventListener("mousemove",(e)=>{
-    agarr.push(new Agent(e.clientX,e.clientY,3))
-})
+// window.addEventListener("mousemove",(e)=>{
+//     agarr.push(new Agent(e.clientX,e.clientY,3))
+// })
+mousedrag(canvas,agarr,Agent)
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)

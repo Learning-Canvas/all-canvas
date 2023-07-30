@@ -153,7 +153,7 @@ let mousePosition = { x: 0, y: 0 };
 // Function to print mouse coordinates
 function printMouseCoordinates() {
   if (isMouseDown) {
-    agarr.push(new Agent(mousePosition.x,mousePosition.y,random(3,9)))
+    agarr.push(new Agent(mousePosition.x,mousePosition.y,1))
   }
 }
 

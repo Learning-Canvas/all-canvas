@@ -1,8 +1,10 @@
 import {Pvector} from './Pvector.js'
 import {drawArrow} from './Arrows.js'
 import { createNoise3D } from 'simplex-noise';
-
+import {Noise} from 'noisejs';
 const noise3D = createNoise3D();
+var noise = new Noise(Math.random());
+console.log(noise)
 let canvas=document.getElementById("canvas")
 let c=canvas.getContext("2d")
 canvas.width=innerWidth
@@ -17,7 +19,6 @@ class fieldline{
     }
     setangle(angle){
         this.force.setangle(angle)
-        this.force.setmag(15)
     }
 }
 class Grid{
@@ -27,18 +28,18 @@ class Grid{
         this.cols=Math.floor(h/resolution)+10
         this.resolution=resolution
     }
-    createcells(){
+    createcells(time){
         for(let i=0;i<this.rows;i++){
             this.grid.push([])
             for(let j=0;j<this.cols;j++){
-                this.grid[i].push(new fieldline(i*this.resolution,j*this.resolution,350))
+                this.grid[i].push(new fieldline(i*this.resolution,j*this.resolution,360*noise.simplex3(i/ 150, j / 150,time)))
             }
         }
     }
     updatecells(time){
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
-                this.grid[i][j].setangle(360*noise3D(i*this.resolution,j*this.resolution,time))
+                this.grid[i][j]=new fieldline(i*this.resolution,j*this.resolution,360*noise.simplex3(i/ 150, j / 150,time))
             }
         }
     }
@@ -54,12 +55,13 @@ class Grid{
 }
 let time=0
 let grid1=new Grid(innerWidth,innerHeight,40)
-grid1.createcells() 
+grid1.createcells(time) 
 function animate(){
     c.clearRect(0,0,innerWidth,innerHeight)
     requestAnimationFrame(animate)
+    time+=0.0001;
     grid1.updatecells(time)
     grid1.show(c)
-    time+=0.0000003;
+    
 }
 animate()

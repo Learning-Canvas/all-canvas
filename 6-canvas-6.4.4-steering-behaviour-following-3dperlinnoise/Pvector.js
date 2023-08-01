@@ -32,7 +32,6 @@ export class Pvector{
         let newy = this.x * Math.sin(angle) + this.y * Math.cos(angle)
         this.x=newx
         this.y=newy
-        this.normalize()
     }
     normalize(){
         let mg=this.mag();

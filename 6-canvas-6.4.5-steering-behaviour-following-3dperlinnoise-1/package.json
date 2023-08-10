@@ -1,0 +1,17 @@
+{
+  "name": "6-canvas-6.4.5-steering-behaviour-following-3dperlinnoise-1",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "noisejs": "^2.1.0"
+  }
+}

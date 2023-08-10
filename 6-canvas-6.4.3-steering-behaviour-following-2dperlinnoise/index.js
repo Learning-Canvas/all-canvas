@@ -75,6 +75,7 @@ class Agent{
         this.velocity.add(this.acceleration)
         this.velocity.limit(this.velocitylimit)
         this.location.add(this.velocity)
+        this.acceleration.setmag(0)
         if(this.location.x<0){
             this.location.x=innerWidth
         }

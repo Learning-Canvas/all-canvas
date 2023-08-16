@@ -18,7 +18,13 @@ class CellularAtomata{
     }
     initialize(){
         for(let i=0;i<innerWidth;i++){
-            this.arr.push(0)
+            if(i===innerWidth/2){
+                this.arr.push(1)
+            }
+            else{
+                this.arr.push(0)
+            }
+
         }
     }
     applyruleset(a,b,c){
@@ -37,25 +43,26 @@ class CellularAtomata{
         for(let i=0;i<this.arr.length-2;i++){
             updatearr.push(this.applyruleset(this.arr[i],this.arr[i+1],this.arr[i+2]))
         }
+        updatearr.push(this.arr[this.arr.length-1])
+        updatearr.push(this.arr[this.arr.length-2])
         this.arr=updatearr;
-        console.log(this.arr)
     }
     drawinitial(i){
         for(let j=0;j<this.arr.length;j++){
             if(this.arr[j]===1){
                 drawpixel(c,j,i,"black")
             }
-            
         }
     }
     draw(c){
         for(let i=0;i<innerHeight;i++){
             this.applyrules()
-            this.drawinitial(c,i)
+            this.drawinitial(i)
         }
+        
     }
 
 }
-let ca1=new CellularAtomata([0,0,0,1,1,1,1,0])
+let ca1=new CellularAtomata([0,1,0,0,1,0,1,0])
 ca1.initialize()
-ca1.draw(c)
+ca1.draw(c) 

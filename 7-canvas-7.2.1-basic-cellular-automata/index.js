@@ -24,7 +24,6 @@ class CellularAtomata{
             else{
                 this.arr.push(0)
             }
-
         }
     }
     applyruleset(a,b,c){
@@ -63,6 +62,9 @@ class CellularAtomata{
     }
 
 }
-let ca1=new CellularAtomata([0,1,0,0,1,0,1,0])
+let ca1=new CellularAtomata([0,1,1,0,1,0,1,0])
 ca1.initialize()
 ca1.draw(c) 
+// let ca1=new CellularAtomata([1,0,1,0,0,1,0,1])
+// ca1.initialize()
+// ca1.draw(c) 

@@ -27,14 +27,14 @@ class CellularAtomata{
         }
     }
     applyruleset(a,b,c){
-        if(a===0 && b===0 && c===0){return this.ruleset[0]}
-        if(a===0 && b===0 && c===1){return this.ruleset[1]}
-        if(a===0 && b===1 && c===0){return this.ruleset[2]}
-        if(a===0 && b===1 && c===1){return this.ruleset[3]}
-        if(a===1 && b===0 && c===0){return this.ruleset[4]}
-        if(a===1 && b===0 && c===1){return this.ruleset[5]}
-        if(a===1 && b===1 && c===0){return this.ruleset[6]}
-        if(a===1 && b===1 && c===1){return this.ruleset[7]}
+        if(a===0 && b===0 && c===0){return this.ruleset[7]}
+        if(a===0 && b===0 && c===1){return this.ruleset[6]}
+        if(a===0 && b===1 && c===0){return this.ruleset[5]}
+        if(a===0 && b===1 && c===1){return this.ruleset[4]}
+        if(a===1 && b===0 && c===0){return this.ruleset[3]}
+        if(a===1 && b===0 && c===1){return this.ruleset[2]}
+        if(a===1 && b===1 && c===0){return this.ruleset[1]}
+        if(a===1 && b===1 && c===1){return this.ruleset[0]}
 
     }
     applyrules(){
@@ -62,9 +62,12 @@ class CellularAtomata{
     }
 
 }
-let ca1=new CellularAtomata([0,1,1,0,1,0,1,0])
-ca1.initialize()
-ca1.draw(c) 
+// let ca1=new CellularAtomata([0,1,1,0,1,0,1,0])
+// ca1.initialize()
+// ca1.draw(c) 
 // let ca1=new CellularAtomata([1,0,1,0,0,1,0,1])
 // ca1.initialize()
 // ca1.draw(c) 
+let ca1=new CellularAtomata([0,0,0,1,1,1,1,0])
+ca1.initialize()
+ca1.draw(c) 

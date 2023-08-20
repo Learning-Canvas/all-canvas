@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    <div style="position:relative;width:800px;height:800px">
+        <canvas width="800" height="800" id="canvas"></canvas>
+        <p style="position:absolute;left:100px;top:60px;width:100px;">try submitting 18,30,45,51,75,105(0_255)</p>
+        <input type="number" id="value" onchange="update()" style="position:absolute;left:100px;top:100px;width:100px;" />
+        <!-- <input type="submit" id="change"   style="position:absolute;left:100px;top:120px;width:100px;" /> -->
+    </div>
     <script src="index.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@ function drawpixel(c,x,y,color){
     c.beginPath()
     c.moveTo(x,y)
     c.lineTo(x+1,y+1)
-    c.strokeStyle=color
+    c.strokeStyle=color;
     c.stroke()
 }
 class CellularAutomata{
@@ -26,20 +26,19 @@ class CellularAutomata{
     }
     run(c){
         for(let i=0;i<innerHeight;i++){
-            console.log(this.arr)
         this.update()
         this.draw(c,i)
         }
     }
     applyruleset(a,b,c){
-        if(a===1 && b===1 && c===1){return this.rules[7]}
-        if(a===1 && b===1 && c===0){return this.rules[6]}
-        if(a===1 && b===0 && c===1){return this.rules[5]}
-        if(a===1 && b===0 && c===0){return this.rules[4]}
-        if(a===0 && b===1 && c===1){return this.rules[3]}
-        if(a===0 && b===1 && c===0){return this.rules[2]}
-        if(a===0 && b===0 && c===1){return this.rules[1]}
-        if(a===0 && b===0 && c===0){return this.rules[0]}
+        if(a===1 && b===1 && c===1){return this.rules[0]}
+        if(a===1 && b===1 && c===0){return this.rules[1]}
+        if(a===1 && b===0 && c===1){return this.rules[2]}
+        if(a===1 && b===0 && c===0){return this.rules[3]}
+        if(a===0 && b===1 && c===1){return this.rules[4]}
+        if(a===0 && b===1 && c===0){return this.rules[5]}
+        if(a===0 && b===0 && c===1){return this.rules[6]}
+        if(a===0 && b===0 && c===0){return this.rules[7]}
     }
     update(){
         let newarr=[]   
@@ -51,11 +50,16 @@ class CellularAutomata{
         this.arr=newarr;
     }
     draw(c,i){
+        if(i===1){
+            console.log(this.arr)
+        }
     for(let j=0;j<this.arr.length;j++){
-        drawpixel(c,this.arr[j],i,"black")
+        if(this.arr[j]===1){
+            drawpixel(c,j,i,"black")
+        }
     }
     }
 }
-let ca1=new CellularAutomata([0,1,0,0,1,0,1,0])
+let ca1=new CellularAutomata([0,0,0,1,1,1,1,0])
 ca1.initialize()
 ca1.run(c)
